@@ -311,7 +311,8 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                 child: AnimatedBuilder(
                   animation: _ac,
                   builder: (context, child) {
-                    return Container(
+                    return AnimatedContainer(
+                      duration: Duration(milliseconds: 300),
                       height:
                           _ac.value * (widget.maxHeight - widget.minHeight) +
                               widget.minHeight,
