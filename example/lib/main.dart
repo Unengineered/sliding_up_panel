@@ -9,11 +9,11 @@ Licensing: More information can be found here: https://github.com/akshathjain/sl
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong/latlong.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 void main() => runApp(SlidingUpPanelExample());
@@ -44,8 +44,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final double _initFabHeight = 120.0;
-  double _fabHeight = 0;
+  //final double _initFabHeight = 120.0;
+  //double _fabHeight = 0;
   double _panelHeightOpen = 0;
   double _panelHeightClosed = 95.0;
 
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    _fabHeight = _initFabHeight;
+    //_fabHeight = _initFabHeight;
   }
 
   @override
@@ -70,21 +70,7 @@ class _HomePageState extends State<HomePage> {
             parallaxEnabled: true,
             parallaxOffset: .5,
             body: _body(),
-            panelBuilder: (sc) => _panel(sc),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(18.0),
-                topRight: Radius.circular(18.0)),
-            onPanelSlide: (double pos) => setState(() {
-              _fabHeight = pos * (_panelHeightOpen - _panelHeightClosed) +
-                  _initFabHeight;
-            }),
-          ),
-
-          // the fab
-          Positioned(
-            right: 20.0,
-            bottom: _fabHeight,
-            child: FloatingActionButton(
+            floatingActionButton: FloatingActionButton(
               child: Icon(
                 Icons.gps_fixed,
                 color: Theme.of(context).primaryColor,
@@ -92,7 +78,29 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {},
               backgroundColor: Colors.white,
             ),
+            panelBuilder: (sc) => _panel(sc),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(18.0),
+                topRight: Radius.circular(18.0)),
+            // onPanelSlide: (double pos) => setState(() {
+            //   _fabHeight = pos * (_panelHeightOpen - _panelHeightClosed) +
+            //       _initFabHeight;
+            // }),
           ),
+
+          //the fab
+          // Positioned(
+          //   right: 20.0,
+          //   bottom: _fabHeight,
+          //   child: FloatingActionButton(
+          //     child: Icon(
+          //       Icons.gps_fixed,
+          //       color: Theme.of(context).primaryColor,
+          //     ),
+          //     onPressed: () {},
+          //     backgroundColor: Colors.white,
+          //   ),
+          // ),
 
           Positioned(
               top: 0,

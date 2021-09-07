@@ -28,6 +28,10 @@ class SlidingUpPanel extends StatefulWidget {
   /// [panel] will be used.
   final Widget? panel;
 
+
+  final Widget? floatingActionButton;
+
+
   /// WARNING: This feature is still in beta and is subject to change without
   /// notice. Stability is not gauranteed. Provides a [ScrollController] and
   /// [ScrollPhysics] to attach to a scrollable object in the panel that links
@@ -163,6 +167,7 @@ class SlidingUpPanel extends StatefulWidget {
       {Key? key,
       this.panel,
       this.panelBuilder,
+      this.floatingActionButton,
       this.body,
       this.collapsed,
       this.minHeight = 100.0,
@@ -311,22 +316,32 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                 child: AnimatedBuilder(
                   animation: _ac,
                   builder: (context, child) {
-                    return AnimatedContainer(
-                      duration: _ac.value == 1.0 ? Duration(milliseconds: 300) : Duration.zero,
-                      height:
-                          _ac.value * (widget.maxHeight - widget.minHeight) +
-                              widget.minHeight,
-                      margin: widget.margin,
-                      padding: widget.padding,
-                      decoration: widget.renderPanelSheet
-                          ? BoxDecoration(
-                              border: widget.border,
-                              borderRadius: widget.borderRadius,
-                              boxShadow: widget.boxShadow,
-                              color: widget.color,
-                            )
-                          : null,
-                      child: child,
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if(widget.floatingActionButton != null) Container(
+                          margin: EdgeInsets.only(right: 20, bottom: 20),
+                          alignment: Alignment.centerRight,
+                          child: widget.floatingActionButton!,
+                        ),
+                        AnimatedContainer(
+                          duration: _ac.value == 1.0 ? Duration(milliseconds: 300) : Duration.zero,
+                          height:
+                              _ac.value * (widget.maxHeight - widget.minHeight) +
+                                  widget.minHeight,
+                          margin: widget.margin,
+                          padding: widget.padding,
+                          decoration: widget.renderPanelSheet
+                              ? BoxDecoration(
+                                  border: widget.border,
+                                  borderRadius: widget.borderRadius,
+                                  boxShadow: widget.boxShadow,
+                                  color: widget.color,
+                                )
+                              : null,
+                          child: child,
+                        ),
+                      ],
                     );
                   },
                   child: Stack(
